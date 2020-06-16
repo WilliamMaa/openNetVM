@@ -10,7 +10,7 @@ class Grafana extends React.Component {
     this.state = { ...props };
   }
   componentWillMount(){
-    window.open('http://${hostName}:3000');
+    window.open(`http://${hostName}:3000`);
   }
   render(){
     return (<section>...</section>);
