@@ -4,7 +4,7 @@ import * as React from "react";
 
 const hostName = window.location.hostname;
 
-class Grafana extends Component {
+class Grafana extends React.Component {
   constructor( props ){
     super();
     this.state = { ...props };
