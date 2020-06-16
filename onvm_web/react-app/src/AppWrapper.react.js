@@ -72,6 +72,12 @@ class AppWrapper extends React.PureComponent<Props, State> {
           to: "/core-mappings",
           icon: "cpu",
           LinkComponent: withRouter(NavLink)
+        },
+        {
+          value: "Grafana Page",
+          to: "/grafana",
+          icon: "table",
+          LinkComponent: withRouter(NavLink)
         }
       ]
     };
