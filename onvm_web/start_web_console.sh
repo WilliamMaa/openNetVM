@@ -75,9 +75,9 @@ then
 fi
 
 cd "$ONVM_HOME"/onvm_web || usage
-nohup python3 cors_server.py 8000 &
+nohup python3 cors_server.py &
 export ONVM_WEB_PID=$!
 
-cd "$ONVM_HOME"/onvm_web/web-build || usage
-nohup python3 -m SimpleHTTPServer "$web_port" &
-export ONVM_WEB_PID2=$!
+# cd "$ONVM_HOME"/onvm_web/web-build || usage
+# nohup python3 -m SimpleHTTPServer "$web_port" &
+# export ONVM_WEB_PID2=$!
