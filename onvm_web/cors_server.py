@@ -1,14 +1,19 @@
 # Source: https://stackoverflow.com/questions/21956683/enable-access-control-on-simple-http-server
 
-# PYTHON 2 ONLY
+#!/usr/bin/env python3
+from http.server import HTTPServer, BaseHTTPRequestHandler, test
+# import json
 
-from SimpleHTTPServer import SimpleHTTPRequestHandler
-import BaseHTTPServer
-
-class CORSHandler(SimpleHTTPRequestHandler):
+class CORSRequestHandler(BaseHTTPRequestHandler):
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
-        SimpleHTTPRequestHandler.end_headers(self)
+        BaseHTTPRequestHandler.end_headers(self)
+
+    # def do_POST(self):
+    #     post_body = self.rfile.read(int(self.headers['Content-Length']))
+    #     print(post_body)
+    #     post_body_json = json.loads(post_body);
+    #     print(post_body_json)
 
 if __name__ == '__main__':
-    BaseHTTPServer.test(CORSHandler, BaseHTTPServer.HTTPServer)
+    test(CORSRequestHandler, HTTPServer, port=8000)
