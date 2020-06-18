@@ -68,7 +68,7 @@ def get_config():
     print("Error: No config file found")
     sys.exit(0)
 
-def on_failure(error_output):
+def on_failure():
     """Handles shutdown on error"""
     for lf in log_files:
         lf.close()
@@ -77,7 +77,6 @@ def on_failure(error_output):
             os.system("sudo pkill " + n)
         except OSError:
             pass
-    print(error_output)
     print("Error occurred. Exiting...")
     sys.exit(1)
 
@@ -87,8 +86,7 @@ def running_services():
         for pl in procs_list:
             ret_code = pl.poll()
             if ret_code is not None:
-                out, err = pl.communicate()
-                on_failure(out + err)
+                on_failure()
                 break
             time.sleep(.1)
             continue
@@ -111,12 +109,17 @@ if __name__ == '__main__':
     try:
         os.mkdir(log_dir)
     except OSError:
-        on_failure("Creation of directory %s failed" % (dir))
+        print("Creation of directory %s failed" % (log_dir))
+        on_failure()
 
     config_file = get_config()
 
     with open(config_file) as f:
-        data = json.load(f)
+        try:
+            data = json.load(f)
+        except:
+            print("Cannot load config file. Check JSON syntax\n")
+            sys.exit(1)
     for k, v in data.items():
         for item in v:
             nf_list.append(k)
@@ -138,9 +141,10 @@ if __name__ == '__main__':
                 " Check syntax in your configuration file" % (nf))
             sys.exit(1)
         try:
-            p = Popen(shlex.split(cmd), stdout=log_files[i], stderr=log_files[i])
-            i += 1
+            p = Popen(shlex.split(cmd), stdout=(log_files[i]), stderr=log_files[i], \
+                universal_newlines=True)
             procs_list.append(p)
+            i += 1
         except OSError:
             pass
         os.chdir(cwd)
