@@ -37,7 +37,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         global pid
 
         if(request_type == "start"):
-            command = ['sudo','python', '../examples/config.py', '../examples/example_chain.json']
+            command = ['sudo', 'python', '../examples/config.py', '../examples/example_chain.json']
             try:
                 # check if the process is already started
                 if(pid != -1):
@@ -48,7 +48,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     self.wfile.write(str.encode(response))
                     return None
                 # start the process and save the pid
-                p = subprocess.Popen(command)
+                p = subprocess.Popen(command, stdout='./test.txt', stderr='./test.txt', universal_newlines=True)
                 pid = p.pid
                 self.send_response(200)
                 response = json.dumps({'status': '200', 'message': 'success starting nfs', 'pid': str(pid)})
