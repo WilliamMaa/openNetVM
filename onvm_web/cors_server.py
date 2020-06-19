@@ -23,7 +23,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         post_body_json = json.loads(post_body)
 
         try:
-            request_type = post_body_json['request-type']
+            request_type = post_body_json['request_type']
         except KeyError:
             self.send_response(500)
             self.send_header('Content-type', 'application/json')
