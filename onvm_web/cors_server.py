@@ -15,7 +15,6 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
     def end_headers (self):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', "append,delete,entries,foreach,get,has,keys,set,values,Authorization")
         SimpleHTTPRequestHandler.end_headers(self)
     # handle post event
     def do_POST(self):
