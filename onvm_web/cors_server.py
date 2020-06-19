@@ -37,7 +37,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         global pid
 
         if(request_type == "start"):
-            command = ['python', './test.py']
+            command = ['python', '../examples/config.py', 'example_chain.json']
             try:
                 # check if the process is already started
                 if(pid != -1):
