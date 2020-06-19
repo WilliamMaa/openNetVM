@@ -49,6 +49,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     return None
                 # start the process and save the pid
                 log_file = open('./test.txt', 'w')
+                os.chdir('../examples/')
                 p = subprocess.Popen(command, stdout=(log_file), stderr=log_file, universal_newlines=True)
                 pid = p.pid
                 self.send_response(200)
