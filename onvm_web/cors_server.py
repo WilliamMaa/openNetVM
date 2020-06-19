@@ -48,7 +48,8 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     self.wfile.write(str.encode(response))
                     return None
                 # start the process and save the pid
-                p = subprocess.Popen(command, stdout='./test.txt', stderr='./test.txt', universal_newlines=True)
+                log_file = open('./test.txt', 'w')
+                p = subprocess.Popen(command, stdout=(log_file), stderr=log_file, universal_newlines=True)
                 pid = p.pid
                 self.send_response(200)
                 response = json.dumps({'status': '200', 'message': 'success starting nfs', 'pid': str(pid)})
