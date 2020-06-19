@@ -17,11 +17,16 @@ class NFChain extends React.Component {
         this.state = {
             request_type: "start"
         }
-        axios.post('node1.mingyuma-QV74156.gwcloudlab-PG0.wisc.cloudlab.us:8000', this.state).then(response => {
-            console.log(response)
-        }).catch(error => {
-            console.log(error)
-        })
+        axios.post(`http://${hostName}:8000`, this.state，
+            {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                console.log(response)
+            }).catch(error => {
+                console.log(error)
+            })
     }
 
     render() {
