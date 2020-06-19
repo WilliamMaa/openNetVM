@@ -17,7 +17,13 @@ class NFChain extends React.Component {
         this.state = {
             request_type: "start"
         }
-        axios.post(`http://${hostName}:8000`, this.state).then(response => {
+        axios.post(`http://${hostName}:8000`, this.state,
+            {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
                 console.log(response)
             }).catch(error => {
                 console.log(error)
