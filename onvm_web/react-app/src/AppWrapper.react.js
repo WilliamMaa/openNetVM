@@ -78,6 +78,12 @@ class AppWrapper extends React.PureComponent<Props, State> {
           to: "/grafana",
           icon: "table",
           LinkComponent: withRouter(NavLink)
+        },
+        {
+          value: "NF Chain",
+          to: "/nf-chain",
+          icon: "server",
+          LinkComponent: withRouter(NavLink)
         }
       ]
     };
