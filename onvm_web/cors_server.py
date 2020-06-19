@@ -71,7 +71,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(str.encode(response))
 
-    def do_OPTION(self):
+    def do_OPTIONS(self):
         self.send_response(200)
         self.end_headers()
 
