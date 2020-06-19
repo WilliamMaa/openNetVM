@@ -15,7 +15,7 @@ class NFChain extends React.Component {
     startHandler = e => {
         e.preventDefault();
         this.state = {
-            "request-type": "start"
+            request_type: "start"
         }
         axios.post('node1.mingyuma-QV74156.gwcloudlab-PG0.wisc.cloudlab.us:8000', this.state).then(response => {
             console.log(response)
