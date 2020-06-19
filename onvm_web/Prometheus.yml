@@ -27,4 +27,4 @@ scrape_configs:
   static_configs:
   - targets:
     # to test this on cloudlab, use cloudlab defualt URL
-    - http://node1.mingyuma-qv74156.gwcloudlab-pg0.wisc.cloudlab.us:9100
+    - node1.mingyuma-qv74156.gwcloudlab-pg0.wisc.cloudlab.us:9100
