@@ -51,8 +51,10 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                 p = subprocess.Popen(command)
                 pid = p.pid
                 self.send_response(200)
+                response = json.dumps({'status': '200', 'message': 'success starting nfs'})
             except OSError:
                 self.send_error(500)
+                response = json.dumps({'status': '500', 'message': 'failed starting nfs'})
         elif(request_type == "end"):
             try:
                 os.kill(pid, signal.SIGKILL)
