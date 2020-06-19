@@ -71,5 +71,9 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(str.encode(response))
 
+    def do_OPTION(self):
+        self.send_response(200)
+        self.end_headers()
+
 if __name__ == '__main__':
     test(CORSRequestHandler, HTTPServer, port=8000)
