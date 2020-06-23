@@ -38,11 +38,11 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         response = ""
         global pid
 
-        if(request_type == "start"):
+        if request_type == "start":
             command = ['python', '../examples/config.py', '../examples/example_chain.json']
             try:
                 # check if the process is already started
-                if(pid != -1):
+                if pid != -1:
                     self.send_response(403)
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
@@ -60,8 +60,18 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
             except OSError:
                 self.send_error(500)
                 response = json.dumps({'status': '500', 'message': 'failed starting nfs'})
-        elif(request_type == "end"):
+            finally:
+                log_file.close()
+        # handle stop nf chain request
+        elif request_type == "end":
             try:
+                # open the log file to read the pids of the nfs
+                with open('./test.txt', 'r+') as log_file:
+                    log = log_file.readline()
+                    while(log is not None and log != ""):
+                        log_info = log.split(" ")
+                        if(log_info[0] == "Pid"):
+                            os.kill(int(log_info[1]), signal.SIGKILL)
                 os.kill(pid, signal.SIGKILL)
                 # reset pid
                 pid = -1
