@@ -37,7 +37,9 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         # setup response
         response = ""
         global pid
-        # handle start nf chain request
+        # start the process and save the pid
+        log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'w+')
+
         if(request_type == "start"):
             command = ['python', './config.py', './example_chain.json']
             try:
@@ -49,30 +51,20 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     response = json.dumps({'status': '403', 'message': 'process already started'})
                     self.wfile.write(str.encode(response))
                     return None
-                # open a file to store nf chain output
-                log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'w')
-
                 # in order to run scripts correctly, must change dir to the example folder
                 os.chdir('../examples/')
                 p = subprocess.Popen(command, stdout=(log_file), stderr=log_file, universal_newlines=True)
                 pid = p.pid
                 self.send_response(200)
-
                 # send response to react front end
                 response = json.dumps({'status': '200', 'message': 'success starting nfs', 'pid': str(pid)})
-
                 # change the dir back for correct output
                 os.chdir('../onvm_web/')
             except OSError:
                 self.send_error(500)
                 response = json.dumps({'status': '500', 'message': 'failed starting nfs'})
-            finally:
-                log_file.close()
-        # handle stop nf chain request
         elif(request_type == "end"):
             try:
-                # open the file to load nf information
-                log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'r')
                 # first kill all the nfs that's running in the background
                 next_line = log_file.readline()
                 while(next_line is not None and next_line != ""):
@@ -88,8 +80,6 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                 self.send_response(200)
             except OSError:
                 self.send_error(500)
-            finally:
-                log_file.close()
 
         self.end_headers()
         self.wfile.write(str.encode(response))
