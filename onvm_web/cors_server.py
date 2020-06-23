@@ -64,7 +64,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         elif request_type == "end":
             try:
                 # open the log file to read the pids of the nfs
-                with open('./test.txt', 'r') as log_file:
+                with open('./test.txt', 'r+') as log_file:
                     log_file.flush()
                     log = log_file.readline()
                     while(log is not None and log != ""):
