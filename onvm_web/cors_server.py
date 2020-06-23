@@ -55,7 +55,6 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'w')
                 except:
                     print("cannot open file test.txt")
-                    return None
 
                 # in order to run scripts correctly, must change dir to the example folder
                 os.chdir('../examples/')
@@ -83,7 +82,6 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'r')
                 except:
                     print("cannot open file test.txt")
-                    return None
                 # first kill all the nfs that's running in the background
                 next_line = log_file.readline()
                 while(next_line is not None and next_line != ""):
