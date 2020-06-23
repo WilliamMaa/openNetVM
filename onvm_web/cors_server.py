@@ -60,8 +60,6 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
             except OSError:
                 self.send_error(500)
                 response = json.dumps({'status': '500', 'message': 'failed starting nfs'})
-            finally:
-                log_file.close()
         # handle stop nf chain request
         elif request_type == "end":
             try:
