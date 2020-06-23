@@ -50,7 +50,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     self.wfile.write(str.encode(response))
                     return None
                 # start the process and save the pid
-                log_file = open('.${ONVM_HOME}/onvm_web/test.txt', 'w')
+                log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'w')
                 os.chdir('../examples/')
                 p = subprocess.Popen(command, stdout=(log_file), stderr=log_file, universal_newlines=True)
                 pid = p.pid
@@ -64,7 +64,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         elif request_type == "end":
             try:
                 # open the log file to read the pids of the nfs
-                with open('.${ONVM_HOME}/onvm_web/test.txt', 'r') as log_file:
+                with open('${ONVM_HOME}/onvm_web/test.txt', 'r') as log_file:
                     log = log_file.readline()
                     while(log is not None and log != ""):
                         log_info = log.split(" ")
