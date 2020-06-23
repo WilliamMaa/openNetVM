@@ -71,6 +71,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                         log_info = log.split(" ")
                         if(log_info[0] == "Pid"):
                             os.kill(int(log_info[1]), signal.SIGKILL)
+                    log_file.truncate()
                 os.kill(pid, signal.SIGKILL)
                 # reset pid
                 pid = -1
