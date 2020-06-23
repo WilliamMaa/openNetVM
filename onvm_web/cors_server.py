@@ -54,24 +54,28 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                 os.chdir('../examples/')
                 p = subprocess.Popen(command, stdout=(log_file), stderr=log_file, universal_newlines=True)
                 pid = p.pid
+                # send success message
                 self.send_response(200)
                 response = json.dumps({'status': '200', 'message': 'success starting nfs', 'pid': str(pid)})
+                log_file.flush()
+                # change back to web dir for correct output
                 os.chdir('../onvm_web/')
             except OSError:
                 self.send_error(500)
                 response = json.dumps({'status': '500', 'message': 'failed starting nfs'})
+            finally:
+                log_file.close()
         # handle stop nf chain request
         elif request_type == "end":
             try:
                 # open the log file to read the pids of the nfs
-                with open('./test.txt', 'r+') as log_file:
-                    log_file.flush()
+                with open('./test.txt', 'r') as log_file:
                     log = log_file.readline()
                     while(log is not None and log != ""):
                         log_info = log.split(" ")
                         if(log_info[0] == "Pid"):
                             os.kill(int(log_info[1]), signal.SIGKILL)
-                    log_file.truncate()
+                    # log_file.truncate()
                 os.kill(pid, signal.SIGKILL)
                 # reset pid
                 pid = -1
