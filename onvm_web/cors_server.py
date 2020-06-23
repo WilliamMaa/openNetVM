@@ -39,7 +39,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         global pid
 
         if(request_type == "start"):
-            command = ['python', './config.py', './example_chain.json']
+            command = ['python', '../examples/config.py', '../examples/example_chain.json']
             try:
                 # check if the process is already started
                 if(pid != -1):
@@ -50,8 +50,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     self.wfile.write(str.encode(response))
                     return None
                 # start the process and save the pid
-                log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'w')
-                # in order to run scripts correctly, must change dir to the example folder
+                log_file = open('./test.txt', 'w')
                 os.chdir('../examples/')
                 p = subprocess.Popen(command, stdout=(log_file), stderr=log_file, universal_newlines=True)
                 pid = p.pid
