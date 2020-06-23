@@ -23,6 +23,7 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         post_body = self.rfile.read(int(self.headers.get('content-length')))
         post_body_json = json.loads(post_body)
 
+        # read the request body
         try:
             request_type = post_body_json['request_type']
         except KeyError:
@@ -38,11 +39,11 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         response = ""
         global pid
         # handle start nf chain request
-        if(request_type == "start"):
+        if request_type == "start":
             command = ['python', './config.py', './example_chain.json']
             try:
                 # check if the process is already started
-                if(pid != -1):
+                if pid != -1:
                     self.send_response(403)
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
@@ -50,16 +51,21 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                     self.wfile.write(str.encode(response))
                     return None
                 # open a file to store nf chain output
-                log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'w')
+                try:
+                    log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'w')
+                except:
+                    print("cannot open file test.txt")
 
                 # in order to run scripts correctly, must change dir to the example folder
                 os.chdir('../examples/')
-                p = subprocess.Popen(command, stdout=(log_file), stderr=log_file, universal_newlines=True)
+                p = subprocess.Popen(command, stdout=(log_file),\
+                     stderr=log_file, universal_newlines=True)
                 pid = p.pid
                 self.send_response(200)
 
                 # send response to react front end
-                response = json.dumps({'status': '200', 'message': 'success starting nfs', 'pid': str(pid)})
+                response = json.dumps({'status': '200', \
+                    'message': 'success starting nfs', 'pid': str(pid)})
 
                 # change the dir back for correct output
                 os.chdir('../onvm_web/')
@@ -72,7 +78,10 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
         elif(request_type == "end"):
             try:
                 # open the file to load nf information
-                log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'r')
+                try:
+                    log_file = open('${ONVM_HOME}/onvm_web/test.txt', 'r')
+                except:
+                    print("cannot open file test.txt")
                 # first kill all the nfs that's running in the background
                 next_line = log_file.readline()
                 while(next_line is not None and next_line != ""):
