@@ -57,7 +57,6 @@ class CORSRequestHandler (SimpleHTTPRequestHandler):
                 # send success message
                 self.send_response(200)
                 response = json.dumps({'status': '200', 'message': 'success starting nfs', 'pid': str(pid)})
-                log_file.flush()
                 # change back to web dir for correct output
                 os.chdir('../onvm_web/')
             except OSError:
