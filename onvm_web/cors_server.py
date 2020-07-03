@@ -121,7 +121,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             response = json.dumps({'status': '500', 'message': 'missing data'})
             self.wfile.write(str.encode(response))
             return None
-        print(data)
+        print(type(data))
 
 if __name__ == '__main__':
     test(CORSRequestHandler, HTTPServer, port=8000)
