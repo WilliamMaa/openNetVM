@@ -27,22 +27,22 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         # if request type is form-data
         if(self.headers.get('Content-Type') == 'multipart/form-data'):
 
-        form = cgi.FieldStorage(
-            fp=self.rfile,
-            headers=self.headers,
-            environ={'REQUEST_METHOD': 'POST',
-                     'CONTENT_TYPE': self.headers['Content-Type'],
-                     }
-        )
-        self.send_response(200)
-        self.end_headers()
-        for field in form.keys():
-            field_item = form[field]
-            filename = field_item.filename
-            filevalue = field_item.value
-            filesize = len(filevalue)
-            with open(filename.decode('utf-8'), 'wb') as f:
-                f.write(filevalue)
+            form = cgi.FieldStorage(
+                fp=self.rfile,
+                headers=self.headers,
+                environ={'REQUEST_METHOD': 'POST',
+                        'CONTENT_TYPE': self.headers['Content-Type'],
+                        }
+            )
+            self.send_response(200)
+            self.end_headers()
+            for field in form.keys():
+                field_item = form[field]
+                filename = field_item.filename
+                filevalue = field_item.value
+                filesize = len(filevalue)
+                with open(filename.decode('utf-8'), 'wb') as f:
+                    f.write(filevalue)
 
         # get request body and parse it into json format
         post_body = self.rfile.read(int(self.headers.get('content-length')))
