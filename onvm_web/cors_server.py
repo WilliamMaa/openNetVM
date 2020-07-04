@@ -99,8 +99,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                     if(log_info[0] == "Starting"):
                         message.append("success")
                         # command = "ps -ef | grep sudo | grep speed_tester | grep -v 'grep' | awk '{print $2}'"
-                        command = ["ps", "-ef", "|", "grep", "sudo", "|", "grep", 
-                                    log_info[1], "|", "grep", "-v", "'grep'", "|", "awk", "'{print $2}'"]
+                        command = ["ps", "-ef", "|", "grep", "sudo", "|", "grep", log_info[1], "|", "grep", "-v", "'grep'", "|", "awk", "'{print $2}'"]
                         pids = os.Popen(command, stdout=(close_log_file), stderr=close_log_file, universal_newlines=True)
                         pid_processes = pids.read()
                         if pid_processes != "":
