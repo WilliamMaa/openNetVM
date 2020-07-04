@@ -125,11 +125,11 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             data = request_body_json['data']
         except KeyError:
             # if the body does not have data field
-            self.send_response(500)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            response = json.dumps({'status': '500', 'message': 'missing data'})
-            self.wfile.write(str.encode(response))
+            # self.send_response(500)
+            # self.send_header('Content-type', 'application/json')
+            # self.end_headers()
+            # response = json.dumps({'status': '500', 'message': 'missing data'})
+            # self.wfile.write(str.encode(response))
             return None
         with open('./log.txt', 'w+') as log_file:
             log_file.write(type(data))
