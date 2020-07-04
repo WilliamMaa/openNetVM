@@ -94,6 +94,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             close_log_file = open('./log.txt', 'w+')
             with open('./test.txt', 'r') as log_file:
                 log = log_file.readline()
+                message.append("hello")
                 while(log is not None and log != ""):
                     log_info = log.split(" ")
                     message.append(log_info[0])
