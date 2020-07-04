@@ -98,7 +98,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                     if(log_info[0] == "Starting"):
                         command = "ps -ef | grep sudo | grep " + log_info[1] + " | grep -v 'grep' | awk '{print $2}'"
                         # command = ["ps", "-ef", "|", "grep", "sudo", "|", "grep", log_info[1], "|", "grep", "-v", "'grep'", "|", "awk", "'{print $2}'"]
-                        pids = os.Popen(shlex.split(command))
+                        pids = os.popen(command)
                         pid_processes = pids.read()
                         if pid_processes != "":
                             pid_processes = pid_processes.split("\n")

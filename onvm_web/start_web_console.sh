@@ -75,7 +75,7 @@ then
 fi
 
 cd "$ONVM_HOME"/onvm_web || usage
-nohup python3 cors_server.py &
+nohup sudo python3 cors_server.py &
 export ONVM_WEB_PID=$!
 
 cd "$ONVM_HOME"/onvm_web/web-build || usage
