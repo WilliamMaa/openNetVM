@@ -96,6 +96,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 log = log_file.readline()
                 while(log is not None and log != ""):
                     log_info = log.split(" ")
+                    message.append(log_info[0])
                     if(log_info[0] == "Starting"):
                         message.append("success")
                         # command = "ps -ef | grep sudo | grep speed_tester | grep -v 'grep' | awk '{print $2}'"
