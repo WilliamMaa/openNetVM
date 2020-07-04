@@ -6,7 +6,6 @@ import json
 import subprocess
 import os
 import signal
-import psutil
 
 global is_running
 is_running = -1
