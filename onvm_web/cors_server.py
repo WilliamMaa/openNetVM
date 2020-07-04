@@ -25,7 +25,8 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
     # handle post event
     def do_POST(self):
         # if request type is form-data
-        if(self.headers.get('Content-Type') == 'multipart/form-data'):
+        print(self.headers.get_content_type())
+        if(self.headers.get('content-type') == 'multipart/form-data'):
 
             form = cgi.FieldStorage(
                 fp=self.rfile,
