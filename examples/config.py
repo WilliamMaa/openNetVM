@@ -151,7 +151,6 @@ if __name__ == '__main__':
                 universal_newlines=True)
             procs_list.append(p)
             print("Starting %s %s" % (nf, cmd))
-            print("Pid {}".format(p.pid), flush=True)
             i += 1
         except OSError:
             pass

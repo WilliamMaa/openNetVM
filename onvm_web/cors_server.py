@@ -6,6 +6,7 @@ import json
 import subprocess
 import os
 import signal
+import psutil
 
 global is_running
 is_running = -1
@@ -93,8 +94,13 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 log = log_file.readline()
                 while(log is not None and log != ""):
                     log_info = log.split(" ")
-                    if(log_info[0] == "is_running"):
-                        os.kill(int(log_info[1]), signal.SIGKILL)
+                    if(log_info[0] == "Starting"):
+                        pids = os.popen('ps -ef | grep sudo | grep ' + log_info[1] + ' | grep -v "grep" | awk "{print $2}"')
+                        pid_processes = pids.read()
+                        if pid_processes != "":
+                            pid_processes = pid_processes.split("\n")
+                            for i in pid_processes:
+                                os.kill(int(i), signal.SIGKILL)
                     log = log_file.readline()
             # reset is_running
             is_running = -1

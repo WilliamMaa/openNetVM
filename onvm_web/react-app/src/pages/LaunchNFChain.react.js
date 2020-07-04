@@ -110,7 +110,11 @@ class LaunchNFChainPage extends Component {
                 <div>
                     <input type="file" onChange={this.onFileChange} />
                     <button onClick={this.onFileUpload}>Launch</button>
-                    {this.terminateButton}
+                    <div>
+                    <form ref="form" onSubmit={this.submitHandler}>
+                        <button type="submit">Terminate</button>
+                    </form>
+                </div>
                 </div>
                 {this.fileData()}
             </div>
