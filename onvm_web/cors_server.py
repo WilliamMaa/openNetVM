@@ -43,6 +43,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 filesize = len(filevalue)
                 with open(filename.decode('utf-8'), 'wb') as f:
                     f.write(filevalue)
+            return
 
         # get request body and parse it into json format
         post_body = self.rfile.read(int(self.headers.get('content-length')))
