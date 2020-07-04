@@ -14,7 +14,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
     # CORS setup
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTIONS')
+        self.send_header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization')
         SimpleHTTPRequestHandler.end_headers(self)
 
@@ -27,6 +27,10 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         # parse request body
         try:
             request_type = post_body_json['request_type']
+            data = post_body_json['data']
+            with open('./log.txt', 'w+') as log_file:
+                log_file.write(type(data))
+                log_file.write(data)
         except KeyError:
             # if the body does not have request_type field
             self.send_response(500)
@@ -63,7 +67,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 # setup return result
                 return -1
 
-            self.parse_request_file(request_body_json)
+            # self.parse_request_file(request_body=request_body_json)
 
             # start the process and change the state
             log_file = open('./test.txt', 'w+')
@@ -120,9 +124,9 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             self.wfile.write(str.encode(response))
         return result
 
-    def parse_request_file(self, request_body_json):
+    def parse_request_file(self, request_body):
         try:
-            data = request_body_json['data']
+            data = request_body['data']
             with open('./log.txt', 'w+') as log_file:
                 log_file.write(type(data))
                 log_file.write(data)
