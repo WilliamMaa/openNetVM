@@ -48,7 +48,7 @@ class LaunchNFChainPage extends Component {
             this.state.selectedFile.name
         );
 
-        config = {
+        var config = {
             headers: {'Content-Type': 'multipart/form-data'}
         }
 
