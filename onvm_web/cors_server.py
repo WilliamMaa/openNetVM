@@ -6,7 +6,7 @@ import json
 import subprocess
 import os
 import signal
-import shelx
+import shlex
 
 global is_running
 is_running = -1
@@ -98,7 +98,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                     log_info = log.split(" ")
                     if(log_info[0] == "Starting"):
                         command = 'ps -ef | grep sudo | grep ' + log_info[1] + ' | grep -v "grep" | awk "{print $2}"'
-                        pids = os.Popen(shelx.split(command), stdout=(close_log_file), stderr=close_log_file, universal_newlines=True)
+                        pids = os.Popen(shlex.split(command), stdout=(close_log_file), stderr=close_log_file, universal_newlines=True)
                         pid_processes = pids.read()
                         if pid_processes != "":
                             pid_processes = pid_processes.split("\n")
