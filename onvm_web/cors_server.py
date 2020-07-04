@@ -90,8 +90,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         global is_running
         message = []
         try:
-            # open the log file to read the is_runnings of the nfs
-            close_log_file = open('./log.txt', 'w+')
+            # open the log file to read the process name of the nfs
             with open('./test.txt', 'r') as log_file:
                 log = log_file.readline()
                 while(log is not None and log != ""):
@@ -99,7 +98,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                     if(log_info[0] == "Starting"):
                         command = "ps -ef | grep sudo | grep " + log_info[1] + " | grep -v 'grep' | awk '{print $2}'"
                         # command = ["ps", "-ef", "|", "grep", "sudo", "|", "grep", log_info[1], "|", "grep", "-v", "'grep'", "|", "awk", "'{print $2}'"]
-                        pids = os.Popen(command, stdout=(close_log_file), stderr=close_log_file, universal_newlines=True)
+                        pids = os.popen(command)
                         pid_processes = pids.read()
                         if pid_processes != "":
                             pid_processes = pid_processes.split("\n")
