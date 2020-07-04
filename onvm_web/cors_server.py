@@ -27,10 +27,9 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         # parse request body
         try:
             request_type = post_body_json['request_type']
-            data = post_body_json['data']
             with open('./log.txt', 'w+') as log_file:
-                log_file.write(type(data))
-                log_file.write(data)
+                log_file.write(type(post_body_json['data']))
+                log_file.write(post_body_json['data'])
         except KeyError:
             # if the body does not have request_type field
             self.send_response(500)
