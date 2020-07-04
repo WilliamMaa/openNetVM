@@ -63,7 +63,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 # setup return result
                 return -1
 
-            self.parst_request_file(request_body_json)
+            # self.parst_request_file(request_body_json)
 
             # start the process and change the state
             log_file = open('./test.txt', 'w+')
