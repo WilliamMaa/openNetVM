@@ -48,15 +48,14 @@ class LaunchNFChainPage extends Component {
             this.state.selectedFile.name
         );
 
+        config = {
+            headers: {'Content-Type': 'multipart/form-data'}
+        }
+
         console.log(this.state.selectedFile);
 
-        this.state = {
-            request_type: "start",
-            data: formData
-        };
-
         axios
-            .post(`http://${hostName}:8000`, this.state)
+            .post(`http://${hostName}:8000`, formData, config)
             .then(response => {
                 console.log(response);
             })
@@ -109,7 +108,8 @@ class LaunchNFChainPage extends Component {
                 <h3>Upload a JSON Configuration File to Launch a Chain of NFs</h3>
                 <div>
                     <input type="file" onChange={this.onFileChange} />
-                    <button onClick={this.onFileUpload}>Launch</button>
+                    <button onClick={this.onFileUpload}>Upload</button>
+                    <button >Launch</button>
                     <div>
                     <form ref="form" onSubmit={this.submitHandler}>
                         <button type="submit">Terminate</button>

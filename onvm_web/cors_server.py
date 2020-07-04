@@ -6,6 +6,7 @@ import json
 import subprocess
 import os
 import signal
+import cgi
 
 global is_running
 is_running = -1
@@ -20,6 +21,21 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
     # handle post event
     def do_POST(self):
+        # if request type is form-data
+        if(self.headers.get('Content-Type') == 'multipart/form-data'):
+            ctype, pdict = cgi.parse_header(self.headers['Content-Type'])
+            if ctype == 'multipart/form-data':
+                pdict['boundary'] = bytes(pdict['boundary'], 'utf-8')
+                fields = cgi.parse_multipart(self.rfile, pdict)
+                messagecontent = fields.get('message')[0].decode('utf-8')
+                with open('./log.txt', 'w+') as log_file:
+                    log_file.write(messagecontent)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                response = json.dumps({'status': '200', 'message': 'successfully upload info'})
+                return None
+
         # get request body and parse it into json format
         post_body = self.rfile.read(int(self.headers.get('content-length')))
         post_body_json = json.loads(post_body)
@@ -27,9 +43,6 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         # parse request body
         try:
             request_type = post_body_json['request_type']
-            with open('./log.txt', 'w+') as log_file:
-                log_file.write(type(post_body_json['data']))
-                log_file.write(post_body_json['data'])
         except KeyError:
             # if the body does not have request_type field
             self.send_response(500)
