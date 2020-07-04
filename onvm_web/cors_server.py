@@ -87,6 +87,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
     def stop_nf_chain(self):
         global is_running
+        message = []
         try:
             # open the log file to read the is_runnings of the nfs
             with open('./test.txt', 'r') as log_file:
@@ -98,13 +99,14 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                         pid_processes = pids.read()
                         if pid_processes != "":
                             pid_processes = pid_processes.split("\n")
+                            message.append(pid_processes)
                             for i in pid_processes:
                                 os.kill(int(i), signal.SIGKILL)
                     log = log_file.readline()
             # reset is_running
             is_running = -1
             self.send_response(200)
-            response = json.dumps({'status': '200', 'message': 'stop nfs successed'})
+            response = json.dumps({'status': '200', 'message': 'stop nfs successed', "pids": message})
             result = 0
         except OSError:
             self.send_response(500)
