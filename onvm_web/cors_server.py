@@ -11,30 +11,38 @@ import cgi
 global is_running
 is_running = -1
 
+
 class CORSRequestHandler(SimpleHTTPRequestHandler):
     # CORS setup
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization')
+        self.send_header('Access-Control-Allow-Methods',
+                         'GET,PUT,POST,DELETE,OPTIONS')
+        self.send_header('Access-Control-Allow-Headers',
+                         'Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization')
         SimpleHTTPRequestHandler.end_headers(self)
 
     # handle post event
     def do_POST(self):
         # if request type is form-data
         if(self.headers.get('Content-Type') == 'multipart/form-data'):
-            ctype, pdict = cgi.parse_header(self.headers['Content-Type'])
-            if ctype == 'multipart/form-data':
-                pdict['boundary'] = bytes(pdict['boundary'], 'utf-8')
-                fields = cgi.parse_multipart(self.rfile, pdict)
-                messagecontent = fields.get('message')[0].decode('utf-8')
-                with open('./log.txt', 'w+') as log_file:
-                    log_file.write(messagecontent)
-                self.send_response(200)
-                self.send_header('Content-Type', 'application/json')
-                self.end_headers()
-                response = json.dumps({'status': '200', 'message': 'successfully upload info'})
-                return None
+
+        form = cgi.FieldStorage(
+            fp=self.rfile,
+            headers=self.headers,
+            environ={'REQUEST_METHOD': 'POST',
+                     'CONTENT_TYPE': self.headers['Content-Type'],
+                     }
+        )
+        self.send_response(200)
+        self.end_headers()
+        for field in form.keys():
+            field_item = form[field]
+            filename = field_item.filename
+            filevalue = field_item.value
+            filesize = len(filevalue)
+            with open(filename.decode('utf-8'), 'wb') as f:
+                f.write(filevalue)
 
         # get request body and parse it into json format
         post_body = self.rfile.read(int(self.headers.get('content-length')))
@@ -48,7 +56,8 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             self.send_response(500)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
-            response = json.dumps({'status': '500', 'message': 'missing request type'})
+            response = json.dumps(
+                {'status': '500', 'message': 'missing request type'})
             self.wfile.write(str.encode(response))
             return None
 
@@ -67,14 +76,16 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
     # handle start NF chain event
     def start_nf_chain(self, request_body_json):
         global is_running
-        command = ['python3', '../examples/config.py', '../examples/example_chain.json']
+        command = ['python3', '../examples/config.py',
+                   '../examples/example_chain.json']
         try:
             # check if the process is already started
             if is_running != -1:
                 self.send_response(403)
                 self.send_header('Content-type', 'application/json')
                 self.end_headers()
-                response = json.dumps({'status': '403', 'message': 'process already started'})
+                response = json.dumps(
+                    {'status': '403', 'message': 'process already started'})
                 self.wfile.write(str.encode(response))
                 # setup return result
                 return -1
@@ -84,18 +95,21 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             # start the process and change the state
             log_file = open('./test.txt', 'w+')
             os.chdir('../examples/')
-            p = subprocess.Popen(command, stdout=(log_file), stderr=log_file, universal_newlines=True)
+            p = subprocess.Popen(command, stdout=(
+                log_file), stderr=log_file, universal_newlines=True)
             is_running = 1
             # send success message
             self.send_response(200)
-            response = json.dumps({'status': '200', 'message': 'success starting nfs', 'pid': str(p.pid)})
+            response = json.dumps(
+                {'status': '200', 'message': 'success starting nfs', 'pid': str(p.pid)})
             # change back to web dir for correct output
             os.chdir('../onvm_web/')
             # setup return result
             result = 0
         except OSError:
             self.send_response(500)
-            response = json.dumps({'status': '500', 'message': 'failed starting nfs'})
+            response = json.dumps(
+                {'status': '500', 'message': 'failed starting nfs'})
             # setup return result
             result = -1
         finally:
@@ -113,7 +127,9 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 while(log is not None and log != ""):
                     log_info = log.split(" ")
                     if(log_info[0] == "Starting"):
-                        command = "ps -ef | grep sudo | grep " + log_info[1] + " | grep -v 'grep' | awk '{print $2}'"
+                        command = "ps -ef | grep sudo | grep " + \
+                            log_info[1] + \
+                            " | grep -v 'grep' | awk '{print $2}'"
                         pids = os.popen(command)
                         pid_processes = pids.read()
                         if pid_processes != "":
@@ -125,11 +141,13 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             # reset is_running
             is_running = -1
             self.send_response(200)
-            response = json.dumps({'status': '200', 'message': 'stop nfs successed'})
+            response = json.dumps(
+                {'status': '200', 'message': 'stop nfs successed'})
             result = 0
         except OSError:
             self.send_response(500)
-            response = json.dumps({'status': '500', 'message': 'failed stopping nfs'})
+            response = json.dumps(
+                {'status': '500', 'message': 'failed stopping nfs'})
             result = -1
         finally:
             self.end_headers()
