@@ -63,7 +63,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 # setup return result
                 return -1
 
-            # self.parst_request_file(request_body_json)
+            self.parse_request_file(request_body_json)
 
             # start the process and change the state
             log_file = open('./test.txt', 'w+')
@@ -120,9 +120,12 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             self.wfile.write(str.encode(response))
         return result
 
-    def parst_request_file(self, request_body_json):
+    def parse_request_file(self, request_body_json):
         try:
             data = request_body_json['data']
+            with open('./log.txt', 'w+') as log_file:
+                log_file.write(type(data))
+                log_file.write(data)
         except KeyError:
             # if the body does not have data field
             # self.send_response(500)
@@ -131,9 +134,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             # response = json.dumps({'status': '500', 'message': 'missing data'})
             # self.wfile.write(str.encode(response))
             return None
-        with open('./log.txt', 'w+') as log_file:
-            log_file.write(type(data))
-            log_file.write("\n" + data)
+
 
 if __name__ == '__main__':
     test(CORSRequestHandler, HTTPServer, port=8000)
