@@ -62,11 +62,25 @@ class LaunchNFChainPage extends Component {
             .catch(error => {
                 console.log(error);
             });
+    };
 
+    // handle launch nf chain
+    onLaunchChain = () => {
+        this.state = {
+            request_type = "start"
+        }
+        axios
+            .post(`http://${hostName}:8000`, this.state)
+            .then(response=> {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
         this.setState({
             launch: 1
         });
-    };
+    }
 
     // read file data
     fileData = () => {
@@ -109,7 +123,7 @@ class LaunchNFChainPage extends Component {
                 <div>
                     <input type="file" onChange={this.onFileChange} />
                     <button onClick={this.onFileUpload}>Upload</button>
-                    <button >Launch</button>
+                    <button onClick={this.onLaunchChain}>Launch</button>
                     <div>
                     <form ref="form" onSubmit={this.submitHandler}>
                         <button type="submit">Terminate</button>

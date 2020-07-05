@@ -38,9 +38,9 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             self.end_headers()
             for field in form.keys():
                 field_item = form[field]
-                filename = field_item.filename
+                # filename = field_item.filename
                 filevalue = field_item.value
-                filesize = len(filevalue)
+                # filesize = len(filevalue)
                 with open("./log.txt", 'w+') as f:
                     print(filevalue)
                     f.write(str(filevalue, 'utf-8'))
@@ -76,7 +76,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
     # handle start NF chain event
-    def start_nf_chain(self, request_body_json):
+    def start_nf_chain(self):
         global is_running
         command = ['python3', '../examples/config.py',
                    '../examples/example_chain.json']
@@ -91,8 +91,6 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 self.wfile.write(str.encode(response))
                 # setup return result
                 return -1
-
-            # self.parse_request_file(request_body=request_body_json)
 
             # start the process and change the state
             log_file = open('./test.txt', 'w+')
@@ -155,21 +153,6 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(str.encode(response))
         return result
-
-    def parse_request_file(self, request_body):
-        try:
-            data = request_body['data']
-            with open('./log.txt', 'w+') as log_file:
-                log_file.write(type(data))
-                log_file.write(data)
-        except KeyError:
-            # if the body does not have data field
-            # self.send_response(500)
-            # self.send_header('Content-type', 'application/json')
-            # self.end_headers()
-            # response = json.dumps({'status': '500', 'message': 'missing data'})
-            # self.wfile.write(str.encode(response))
-            return None
 
 
 if __name__ == '__main__':
