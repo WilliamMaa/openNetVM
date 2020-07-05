@@ -67,7 +67,7 @@ class LaunchNFChainPage extends Component {
     // handle launch nf chain
     onLaunchChain = () => {
         this.state = {
-            request_type = "start"
+            request_type: "start"
         }
         axios
             .post(`http://${hostName}:8000`, this.state)
