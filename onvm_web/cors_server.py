@@ -41,10 +41,9 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 # filename = field_item.filename
                 filevalue = field_item.value
                 # filesize = len(filevalue)
-                with open("./log.txt", 'w+') as f:
-                    print(filevalue)
+                with open("../examples/nf_chain_config.json", 'w+') as f:
                     f.write(str(filevalue, 'utf-8'))
-            return
+            return None
 
         # get request body and parse it into json format
         post_body = self.rfile.read(int(self.headers.get('content-length')))
@@ -65,7 +64,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
         # handle start nf chain requests
         if request_type == "start":
-            self.start_nf_chain(post_body_json)
+            self.start_nf_chain()
         # handle stop nf chain request
         elif request_type == "stop":
             self.stop_nf_chain()
@@ -79,7 +78,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
     def start_nf_chain(self):
         global is_running
         command = ['python3', '../examples/config.py',
-                   '../examples/example_chain.json']
+                   '../examples/nf_chain_config.json']
         try:
             # check if the process is already started
             if is_running != -1:
