@@ -136,7 +136,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                             pid_processes = pid_processes.split("\n")
                             for i in pid_processes:
                                 if i != "":
-                                    os.kill(i, signal.SIGKILL)
+                                    os.kill(int(i), signal.SIGKILL)
                     log = log_file.readline()
             # reset is_running
             is_running = -1
