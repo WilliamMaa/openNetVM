@@ -144,13 +144,14 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             response_code = 200
             response = json.dumps(
                 {'status': '200', 'message': 'stop nfs successed'})
+            self.send_message(response_code, response)
         except OSError:
             response_code = 500
             response = json.dumps(
                 {'status': '500', 'message': 'stop nfs failed'})
+            self.send_message(response_code, response)
         finally:
             self.clear_log()
-            self.send_message(response_code, response)
 
     # send response message
     def send_message(self, response_code, message=None):
