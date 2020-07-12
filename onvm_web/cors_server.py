@@ -161,7 +161,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
     # check if the nf is running
     def check_is_running(self):
-        with open('./log.txt', 'r') as log_file:
+        with open('./log.txt', 'r+') as log_file:
             log = log_file.readline()
             if log is None or log == "":
                 return 1
