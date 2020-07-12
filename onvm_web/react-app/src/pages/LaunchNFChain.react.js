@@ -155,7 +155,6 @@ class LaunchNFChainPage extends Component {
             Terminate
           </button>
         </div>
-        {this.fileData()}
       </div>
     );
   }
