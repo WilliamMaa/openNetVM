@@ -138,6 +138,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                                 if i != "":
                                     os.kill(i, signal.SIGKILL)
                     log = log_file.readline()
+                log_file.truncate()
             # reset is_running
             is_running = -1
             response_code = 200
