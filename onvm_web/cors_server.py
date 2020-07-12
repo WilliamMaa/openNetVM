@@ -115,11 +115,10 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         try:
             # check if the process is already stopped
             is_running = self.check_is_running()
-            if is_running == 1:
+            if is_running == -1:
                 response = json.dumps(
                     {'status': '500', 'message': 'nfs already stoped'})
                 self.send_message(500, response)
-                is_running = -1
                 return None
             # open the log file to read the process name of the nfs
             with open('./log.txt', 'r') as log_file:
