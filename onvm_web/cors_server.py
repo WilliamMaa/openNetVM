@@ -138,7 +138,6 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                                 if i != "":
                                     os.kill(i, signal.SIGKILL)
                     log = log_file.readline()
-                log_file.truncate()
             # reset is_running
             is_running = -1
             response_code = 200
@@ -167,6 +166,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             if log is None or log == "":
                 return -1
             while log is not None and log != "":
+                print("in checking")
                 log_info = log.split(" ")
                 if log_info[0] == "Error" or log_info[0] == "Exiting...":
                     return -1

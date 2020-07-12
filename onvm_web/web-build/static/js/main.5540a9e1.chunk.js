@@ -1089,8 +1089,7 @@
                         },
                         "Terminate"
                       )
-                    ),
-                    this.fileData()
+                    )
                   );
                 }
               }
