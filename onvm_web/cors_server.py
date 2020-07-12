@@ -175,10 +175,9 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
     # clear output log
     def clear_log(self):
-        with open('./log.txt', 'w') as log_file:
-            log_file.seek(0)
-            log_file.truncate()
-
+        os.remove('./log.txt')
+        log_file = open('./log.txt', 'w+')
+        log_file.close()
 
 if __name__ == '__main__':
     test(CORSRequestHandler, HTTPServer, port=8000)

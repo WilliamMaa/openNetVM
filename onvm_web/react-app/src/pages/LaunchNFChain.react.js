@@ -19,7 +19,7 @@ class LaunchNFChainPage extends Component {
   };
 
   // handle submit event
-  submitHandler = event => {
+  OnStopHandler = event => {
     this.state = {
       request_type: "stop"
     };
@@ -142,8 +142,7 @@ class LaunchNFChainPage extends Component {
             Launch NF Chain
           </button>
           <button
-            type="submit"
-            onSubmit={this.submitHandler}
+            onClick={this.OnStopHandler}
             style={{
               margin: "5px",
               backgroundColor: "#db4d5b",
