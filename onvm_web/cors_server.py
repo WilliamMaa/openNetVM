@@ -175,7 +175,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
     # clear output log
     def clear_log(self):
-        with open('./log.txt', 'r+') as log_file:
+        with open('./log.txt', 'w') as log_file:
             log_file.seek(0)
             log_file.truncate()
 
