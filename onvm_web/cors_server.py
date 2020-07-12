@@ -164,12 +164,12 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         with open('./log.txt', 'r+') as log_file:
             log = log_file.readline()
             if log is None or log == "":
-                return 1
+                return -1
             while log is not None and log != "":
                 log_info = log.split(" ")
                 if log_info[0] == "Error" or log_info[0] == "Exiting...":
-                    return 1
-        return -1
+                    return -1
+        return 1
 
     # clear output log
     def clear_log(self):
