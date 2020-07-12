@@ -168,6 +168,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 log_info = log.split(" ")
                 if log_info[0] == "Error" or log_info[0] == "Exiting...":
                     return -1
+                log = log_file.readline()
         return 1
 
     # clear output log
