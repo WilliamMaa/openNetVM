@@ -28,11 +28,11 @@ class LaunchNFChainPage extends Component {
       .post(`http://${hostName}:8000`, this.state)
       .then(response => {
         console.log(response);
-        alert(response.JSON());
+        alert(response.json());
       })
       .catch(error => {
         console.log(error);
-        alert(error.JSON());
+        alert(error.json());
       });
 
     this.setState({
@@ -60,11 +60,11 @@ class LaunchNFChainPage extends Component {
       .post(`http://${hostName}:8000`, formData, config)
       .then(response => {
         console.log(response);
-        alert(response.JSON());
+        alert(response.json());
       })
       .catch(error => {
         console.log(error);
-        alert(error.JSON());
+        alert(error.json());
       });
   };
 
@@ -77,11 +77,11 @@ class LaunchNFChainPage extends Component {
       .post(`http://${hostName}:8000`, this.state)
       .then(response => {
         console.log(response);
-        alert(response.JSON());
+        alert(response.json());
       })
       .catch(error => {
         console.log(error);
-        alert(error.JSON());
+        alert(error.json());
       });
     this.setState({
       launch: 1
