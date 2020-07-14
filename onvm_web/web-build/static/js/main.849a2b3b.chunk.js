@@ -18,8 +18,8 @@
         s = n(44),
         u = n(70),
         p = n(4),
-        m = n(5),
-        f = n(7),
+        f = n(5),
+        m = n(7),
         h = n(6),
         d = n(8),
         b = n(71),
@@ -27,8 +27,8 @@
         g = n(2),
         E = n(12),
         y = {},
-        L = {},
-        C = [],
+        C = {},
+        L = [],
         O = 0,
         j = null,
         N = -1;
@@ -45,10 +45,10 @@
           for (var r = 0; r !== N + 1; ) a.callback(o[r]), ++r;
           a.hasBeenCalled = !0;
         }
-        C.push(a);
+        L.push(a);
       }
       function w(e) {
-        C = C.filter(function(t) {
+        L = L.filter(function(t) {
           return t.name !== e;
         });
       }
@@ -59,14 +59,14 @@
         return [n].concat(Object(E.a)(e));
       }
       function x(e, t) {
-        if ((e in L ? L[e].push(t) : (L[e] = [t]), e in y)) return y[e];
+        if ((e in C ? C[e].push(t) : (C[e] = [t]), e in y)) return y[e];
       }
       function S(e, t, n) {
-        e in L &&
+        e in C &&
           (0 ===
-            L[e].filter(function(e) {
+            C[e].filter(function(e) {
               return e !== t;
-            }).length && delete L[e],
+            }).length && delete C[e],
           null != n && (y[e] = n));
       }
       var R = (function(e) {
@@ -76,7 +76,7 @@
             for (var a = arguments.length, o = new Array(a), r = 0; r < a; r++)
               o[r] = arguments[r];
             return (
-              ((n = Object(f.a)(
+              ((n = Object(m.a)(
                 this,
                 (e = Object(h.a)(t)).call.apply(e, [this].concat(o))
               )).state = { interval: null }),
@@ -85,7 +85,7 @@
           }
           return (
             Object(d.a)(t, e),
-            Object(m.a)(t, [
+            Object(f.a)(t, [
               {
                 key: "dataFetcher",
                 value: function() {
@@ -98,8 +98,8 @@
                       return (function(e) {
                         var t = e.onvm_nf_stats,
                           n = function(e) {
-                            if (e in L)
-                              L[e].forEach(function(n) {
+                            if (e in C)
+                              C[e].forEach(function(n) {
                                 return n(t[e], O);
                               });
                             else if (
@@ -124,8 +124,8 @@
                         for (var a in t) n(a);
                         var o = e.onvm_port_stats,
                           r = function(e) {
-                            if (e in L)
-                              L[e].forEach(function(t) {
+                            if (e in C)
+                              C[e].forEach(function(t) {
                                 return t(o[e], O);
                               });
                             else if (
@@ -164,7 +164,7 @@
                             var t = function() {
                               var t = e[++N];
                               t &&
-                                C.forEach(function(e) {
+                                L.forEach(function(e) {
                                   return e.callback(t);
                                 });
                             };
@@ -259,7 +259,7 @@
             for (var a = arguments.length, o = new Array(a), r = 0; r < a; r++)
               o[r] = arguments[r];
             return (
-              ((n = Object(f.a)(
+              ((n = Object(m.a)(
                 this,
                 (e = Object(h.a)(t)).call.apply(e, [this].concat(o))
               )).state = {
@@ -299,7 +299,7 @@
           }
           return (
             Object(d.a)(t, e),
-            Object(m.a)(t, [
+            Object(f.a)(t, [
               {
                 key: "componentDidMount",
                 value: function() {
@@ -390,7 +390,7 @@
             for (var a = arguments.length, o = new Array(a), r = 0; r < a; r++)
               o[r] = arguments[r];
             return (
-              ((n = Object(f.a)(
+              ((n = Object(m.a)(
                 this,
                 (e = Object(h.a)(t)).call.apply(e, [this].concat(o))
               )).state = { nfLabelList: [] }),
@@ -426,7 +426,7 @@
           }
           return (
             Object(d.a)(t, e),
-            Object(m.a)(t, [
+            Object(f.a)(t, [
               {
                 key: "componentDidMount",
                 value: function() {
@@ -473,7 +473,7 @@
             for (var a = arguments.length, o = new Array(a), r = 0; r < a; r++)
               o[r] = arguments[r];
             return (
-              ((n = Object(f.a)(
+              ((n = Object(m.a)(
                 this,
                 (e = Object(h.a)(t)).call.apply(e, [this].concat(o))
               )).state = { portList: [] }),
@@ -493,7 +493,7 @@
           }
           return (
             Object(d.a)(t, e),
-            Object(m.a)(t, [
+            Object(f.a)(t, [
               {
                 key: "componentDidMount",
                 value: function() {
@@ -577,7 +577,7 @@
             for (var a = arguments.length, o = new Array(a), r = 0; r < a; r++)
               o[r] = arguments[r];
             return (
-              ((n = Object(f.a)(
+              ((n = Object(m.a)(
                 this,
                 (e = Object(h.a)(t)).call.apply(e, [this].concat(o))
               )).state = { instanceId: null, serviceId: null, core: null }),
@@ -593,7 +593,7 @@
           }
           return (
             Object(d.a)(t, e),
-            Object(m.a)(t, [
+            Object(f.a)(t, [
               {
                 key: "componentDidMount",
                 value: function() {
@@ -673,7 +673,7 @@
             for (var a = arguments.length, o = new Array(a), r = 0; r < a; r++)
               o[r] = arguments[r];
             return (
-              ((n = Object(f.a)(
+              ((n = Object(m.a)(
                 this,
                 (e = Object(h.a)(t)).call.apply(e, [this].concat(o))
               )).state = {
@@ -695,7 +695,7 @@
           }
           return (
             Object(d.a)(t, e),
-            Object(m.a)(t, [
+            Object(f.a)(t, [
               {
                 key: "componentDidMount",
                 value: function() {
@@ -820,7 +820,7 @@
             for (var a = arguments.length, o = new Array(a), r = 0; r < a; r++)
               o[r] = arguments[r];
             return (
-              ((n = Object(f.a)(
+              ((n = Object(m.a)(
                 this,
                 (e = Object(h.a)(t)).call.apply(e, [this].concat(o))
               )).state = { coreList: {} }),
@@ -863,7 +863,7 @@
           }
           return (
             Object(d.a)(t, e),
-            Object(m.a)(t, [
+            Object(f.a)(t, [
               {
                 key: "componentDidMount",
                 value: function() {
@@ -928,14 +928,14 @@
             for (var a = arguments.length, r = new Array(a), l = 0; l < a; l++)
               r[l] = arguments[l];
             return (
-              ((n = Object(f.a)(
+              ((n = Object(m.a)(
                 this,
                 (e = Object(h.a)(t)).call.apply(e, [this].concat(r))
               )).state = { selectedFile: null }),
               (n.onFileChange = function(e) {
                 n.setState({ selectedFile: e.target.files[0], launch: 0 });
               }),
-              (n.submitHandler = function(e) {
+              (n.OnStopHandler = function(e) {
                 (n.state = { request_type: "stop" }),
                   J.a
                     .post("http://".concat(q, ":8000"), n.state)
@@ -995,7 +995,7 @@
           }
           return (
             Object(d.a)(t, e),
-            Object(m.a)(t, [
+            Object(f.a)(t, [
               {
                 key: "render",
                 value: function() {
@@ -1077,8 +1077,7 @@
                       o.a.createElement(
                         "button",
                         {
-                          type: "submit",
-                          onSubmit: this.submitHandler,
+                          onClick: this.OnStopHandler,
                           style: {
                             margin: "5px",
                             backgroundColor: "#db4d5b",
