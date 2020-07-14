@@ -12,26 +12,24 @@ class LaunchNFChainPage extends Component {
     selectedFile: null
   };
 
+  unloadShutDownNFChain = () => {
+      
+  }
+
   componentDidMount() {
     window.addEventListener('beforeunload', (event) => {
         event.preventDefault();
-        
-        return event.returnValue = `Are you sure you want to leave? Leaving this page will shut down your NF chain`;
+        return this.OnStopHandler()
     });
   }
+
+  // https://stackoverflow.com/questions/36355093/reactjs-browser-tab-close-event
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', (event) => {
         return NaN
     });
   }
-
-  // useBeforeunload(event => event.preventDefault());
-  // useBeforeunload(() => "You'll lose your data!");
-
-  // <Beforeunload onBeforeunload={event => onWindowClose.preventDefault()} />
-  // <Beforeunload onBeforeunload={() => "You'll lose your data!"} />
-
 
   // handle file change
   onFileChange = event => {
