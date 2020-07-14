@@ -32,7 +32,7 @@ class LaunchNFChainPage extends Component {
       })
       .catch(error => {
         console.log(error);
-        alert(error.json());
+        // alert(error.json());
       });
 
     this.setState({
@@ -64,7 +64,7 @@ class LaunchNFChainPage extends Component {
       })
       .catch(error => {
         console.log(error);
-        alert(error.json());
+        // alert(error.json());
       });
   };
 
@@ -81,7 +81,7 @@ class LaunchNFChainPage extends Component {
       })
       .catch(error => {
         console.log(error);
-        alert(error.json());
+        // alert(error.json());
       });
     this.setState({
       launch: 1
