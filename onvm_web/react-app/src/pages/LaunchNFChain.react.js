@@ -20,7 +20,9 @@ class LaunchNFChainPage extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('beforeunload', (event));
+    window.removeEventListener('beforeunload', (event) => {
+        return NaN
+    });
   }
 
   // useBeforeunload(event => event.preventDefault());
