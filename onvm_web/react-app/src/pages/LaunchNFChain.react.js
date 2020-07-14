@@ -2,7 +2,6 @@
 import axios from "axios";
 
 import React, { Component } from "react";
-import { useBeforeunload } from 'react-beforeunload';
 
 // https://www.npmjs.com/package/react-beforeunload
 
