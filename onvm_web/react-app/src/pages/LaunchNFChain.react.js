@@ -15,7 +15,8 @@ class LaunchNFChainPage extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', (event) => {
         event.preventDefault();
-        event.returnValue = `Are you sure you want to leave?`;
+        
+        return event.returnValue = `Are you sure you want to leave? Leaving this page will shut down your NF chain`;
     });
   }
 
