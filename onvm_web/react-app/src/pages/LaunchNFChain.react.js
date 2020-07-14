@@ -3,8 +3,6 @@ import axios from "axios";
 
 import React, { Component } from "react";
 
-// https://www.npmjs.com/package/react-beforeunload
-
 const hostName = window.location.hostname;
 
 class LaunchNFChainPage extends Component {
@@ -15,7 +13,7 @@ class LaunchNFChainPage extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', (event) => {
         event.preventDefault();
-        event.returnValue = "Close this tab will also close the nf chain, are you sure you want to leave?"
+        event.returnValue = "Closing this tab will also close the nf chain, are you sure you want to leave?"
         return this.OnStopHandler()
     });
   }
