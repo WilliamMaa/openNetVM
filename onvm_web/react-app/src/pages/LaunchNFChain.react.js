@@ -2,6 +2,9 @@
 import axios from "axios";
 
 import React, { Component } from "react";
+import { useBeforeunload } from 'react-beforeunload';
+
+// https://www.npmjs.com/package/react-beforeunload
 
 const hostName = window.location.hostname;
 
@@ -9,6 +12,24 @@ class LaunchNFChainPage extends Component {
   state = {
     selectedFile: null
   };
+
+  componentDidMount() {
+    window.addEventListener('beforeunload', (event) => {
+        event.preventDefault();
+        event.returnValue = `Are you sure you want to leave?`;
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', (event));
+  }
+
+  // useBeforeunload(event => event.preventDefault());
+  // useBeforeunload(() => "You'll lose your data!");
+
+  // <Beforeunload onBeforeunload={event => onWindowClose.preventDefault()} />
+  // <Beforeunload onBeforeunload={() => "You'll lose your data!"} />
+
 
   // handle file change
   onFileChange = event => {
