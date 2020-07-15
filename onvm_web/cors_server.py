@@ -7,15 +7,11 @@ import subprocess
 import os
 import signal
 import cgi
-import time
-import _thread
 
 # use this variable to track if the nf is still running
 # if the nf chain is running, 1
 # if the nf chain is not running, -1
 global is_running
-global nf_pids
-nf_pids = {}
 is_running = -1
 
 
@@ -42,7 +38,9 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
             )
             for field in form.keys():
                 field_item = form[field]
+                # filename = field_item.filename
                 filevalue = field_item.value
+                # filesize = len(filevalue)
                 with open("../examples/nf_chain_config.json", 'w+') as f:
                     f.write(str(filevalue, 'utf-8'))
             self.send_message(200)
@@ -103,19 +101,17 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 {'status': '200', 'message': 'start nfs successed', 'pid': str(p.pid)})
             # change back to web dir for correct output
             os.chdir('../onvm_web/')
-            log_file.close()
-            _thread.start_new_thread(self.get_pids, ())
         except OSError:
-            log_file.close()
             response_code = 500
             response = json.dumps(
                 {'status': '500', 'message': 'start nfs failed'})
         finally:
+            log_file.close()
             self.send_message(response_code, response)
 
     # handle stop nf request
     def stop_nf_chain(self):
-        global is_running, nf_pids
+        global is_running
         try:
             # check if the process is already stopped
             is_running = self.check_is_running()
@@ -124,10 +120,24 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                     {'status': '500', 'message': 'nf chain already stoped'})
                 self.send_message(500, response)
                 return None
-            # kill the processes that we stored
-            for value in nf_pids.values():
-                for i in value:
-                    os.kill(int(i), signal.SIGKILL)
+            # open the log file to read the process name of the nfs
+            with open('./log.txt', 'r') as log_file:
+                log = log_file.readline()
+                while log is not None and log != "":
+                    log_info = log.split(" ")
+                    if log_info[0] == "Starting":
+                        # get the pids of the nfs
+                        command = "ps -ef | grep sudo | grep " + \
+                            log_info[1] + \
+                            " | grep -v 'grep' | awk '{print $2}'"
+                        pids = os.popen(command)
+                        pid_processes = pids.read()
+                        if pid_processes != "":
+                            pid_processes = pid_processes.split("\n")
+                            for i in pid_processes:
+                                if i != "":
+                                    os.kill(int(i), signal.SIGKILL)
+                    log = log_file.readline()
             # reset is_running
             is_running = -1
             response_code = 200
@@ -168,37 +178,6 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         os.remove('./log.txt')
         log_file = open('./log.txt', 'w+')
         log_file.close()
-
-    # This function is used to get the pids of the process
-    def get_pids(self):
-        global nf_pids
-        number_of_nfs = {}
-        # wait until we are mostly sure the log file is loaded
-        time.sleep(1)
-        # get the pids of the nfs we started using the chain configuration
-        with open('./log.txt', 'r') as log_file:
-            log = log_file.readline()
-            while log is not None and log != "":
-                log_info = log.split(" ")
-                if log_info[0] == "Starting":
-                    if log_info[1] not in nf_pids:
-                        # get the pids of the nfs
-                        command = "ps -ef | grep sudo | grep " + \
-                            log_info[1] + \
-                            " | grep -v 'grep' | awk '{print $2}'"
-                        pids = os.popen(command)
-                        pid_processes = pids.read()
-                        if pid_processes != "":
-                            pid_processes = pid_processes.split("\n")
-                            nf_pids[log_info[1]] = pid_processes
-                            number_of_nfs[log_info[1]] = 1
-                    else:
-                        number_of_nfs[log_info[1]] += 1
-            log = log_file.readline()
-        # get the pids that are started by this chain configuration
-        for key in nf_pids:
-            num_nf = 0 - number_of_nfs[key]
-            nf_pids[key] = nf_pids[key][num_nf:]
 
 if __name__ == '__main__':
     test(CORSRequestHandler, HTTPServer, port=8000)
