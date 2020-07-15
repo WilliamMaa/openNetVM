@@ -10,27 +10,27 @@ class LaunchNFChainPage extends Component {
     selectedFile: null
   };
 
-  unloadHandler = (event) => {
-      event.preventDefault();
-      event.returnValue = "";
-      this.OnStopHandler();
-  }
+//   unloadHandler = (event) => {
+//       event.preventDefault();
+//       event.returnValue = "";
+//       this.OnStopHandler();
+//   }
 
-  componentDidMount() {
-    window.addEventListener('beforeunload', (this.unloadHandler)); 
-    // => {
-    //     event.preventDefault();
-    //     event.returnValue = "Closing this tab will also close the nf chain, are you sure you want to leave?";
-    //     return this.OnStopHandler();
-    // });
-  }
+//   componentDidMount() {
+//     window.addEventListener('beforeunload', (this.unloadHandler)); 
+//     // => {
+//     //     event.preventDefault();
+//     //     event.returnValue = "Closing this tab will also close the nf chain, are you sure you want to leave?";
+//     //     return this.OnStopHandler();
+//     // });
+//   }
 
-  componentWillUnmount() {
-    // window.removeEventListener('beforeunload', (event) => {
-    //     return NaN
-    // });
-    window.removeEventListener('beforeunload', (this.unloadHandler)); 
-  }
+//   componentWillUnmount() {
+//     // window.removeEventListener('beforeunload', (event) => {
+//     //     return NaN
+//     // });
+//     window.removeEventListener('beforeunload', (this.unloadHandler)); 
+//   }
 
   // https://stackoverflow.com/questions/36355093/reactjs-browser-tab-close-event
 
