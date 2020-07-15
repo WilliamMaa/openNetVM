@@ -108,5 +108,7 @@ if [ "${stats}" = "-s web" ]
 then
     echo "Killing web stats running with PIDs: $ONVM_WEB_PID, $ONVM_WEB_PID2"
     sudo kill "$ONVM_WEB_PID"
-    kill "$ONVM_WEB_PID2"
+    sudo kill "$ONVM_WEB_PID2"
+    rm "$ONVM_HOME"/example/nf_chain_config.json
+    rm "$ONVM_HOME"/onvm_web/log.txt
 fi

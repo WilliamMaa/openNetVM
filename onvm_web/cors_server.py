@@ -79,6 +79,13 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
     # handle start NF chain event
     def start_nf_chain(self):
         global is_running
+
+        # test if the config file have been uploaded
+        if not os.path.getsize("../examples/nf_chain_config.json"):
+            response = json.dumps({'status': '403', 'message': 'no config file have been uploaded to the server'})
+            self.send_message(403, response)
+            return None
+
         # check if the process is already started
         is_running = self.check_is_running()
         if is_running == 1:

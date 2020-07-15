@@ -74,6 +74,11 @@ then
   exit 1
 fi
 
+# Create all the log files needed for the server
+touch log.txt
+cd "$ONVM_HOME"/examples
+touch nf_chain_config.json
+
 cd "$ONVM_HOME"/onvm_web || usage
 nohup sudo python3 cors_server.py &
 export ONVM_WEB_PID=$!
