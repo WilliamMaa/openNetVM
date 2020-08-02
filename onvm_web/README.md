@@ -79,7 +79,7 @@ Remember to run commands in sudo for nodejs and npm
 
 Install latest stable Node.js version
 ```sh
-curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 # Install Node.js from the Debian-based distributions repository
 sudo apt-get install -y nodejs
 # Use package manager
